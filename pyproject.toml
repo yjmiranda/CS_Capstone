@@ -1,0 +1,16 @@
+[project]
+name = "cs-capstone"
+version = "0.1.0"
+description = "Computer Science Capstone Project for WGU. A machine learning app that determines whether an bank loan applicant is likely to default."
+authors = [
+    {name = "Yali Miranda",email = "ymiran7@wgu.edu"}
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
