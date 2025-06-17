@@ -1,11 +1,11 @@
 [project]
-name = "cs-capstone"
+name = "backend"
 version = "0.1.0"
-description = "Computer Science Capstone Project for WGU. A machine learning app that determines whether an bank loan applicant is likely to default."
+description = "Backend server for Computer Science Capstone for WGU. A machine learning app that determines whether a bank loan applicant is likely to default."
 authors = [
     {name = "Yali Miranda",email = "ymiran7@wgu.edu"}
 ]
-readme = "README.md"
+package-mode = false
 requires-python = ">=3.13"
 dependencies = [
     "scikit-learn (>=1.7.0,<2.0.0)"
