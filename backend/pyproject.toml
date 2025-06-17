@@ -5,7 +5,6 @@ description = "Backend server for Computer Science Capstone for WGU. A machine l
 authors = [
     {name = "Yali Miranda",email = "ymiran7@wgu.edu"}
 ]
-package-mode = false
 requires-python = ">=3.13"
 dependencies = [
     "scikit-learn (>=1.7.0,<2.0.0)"
