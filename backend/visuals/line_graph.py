@@ -1,6 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from config import CSV_FILE_PATH
+from backend.src.config import CSV_FILE_PATH
 
 # define data frame
 loan_df = pd.read_csv(CSV_FILE_PATH)
@@ -15,9 +15,10 @@ default_rates = loan_df.groupby('score-bin', observed=True)['Default'].mean()
 
 # line plot for default rate per bin
 default_rates.plot(kind='line', marker='o')
-plt.title('Default Rate by Credit Score Bin')
+plt.title('Default Rate by Credit Score Range')
 plt.xlabel('Credit Score Range')
 plt.ylabel('Default Rate')
 plt.grid(True)
 plt.tight_layout()
-plt.show()
+plt.savefig('./default_rates_by_credit_score.png')
+plt.close()
