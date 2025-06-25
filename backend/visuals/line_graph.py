@@ -1,6 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from backend.src.config import CSV_FILE_PATH
+from backend.src.config import *
 
 # define data frame
 loan_df = pd.read_csv(CSV_FILE_PATH)
@@ -20,5 +20,5 @@ plt.xlabel('Credit Score Range')
 plt.ylabel('Default Rate')
 plt.grid(True)
 plt.tight_layout()
-plt.savefig('./default_rates_by_credit_score.png')
+plt.savefig(VISUALS_FILE_PATH/'default_rates_by_credit_score.png')
 plt.close()
