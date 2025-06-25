@@ -10,7 +10,7 @@ from config import *
 
 loan_df = pd.read_csv(CSV_FILE_PATH)  # convert data into dataframe
 
-# ----  DATA PREPROCESSING ----
+# ---- DATA PREPROCESSING ----
 
 # remove rows with missing data
 loan_df.dropna(inplace=True)
@@ -44,7 +44,7 @@ training_rf_model = RandomForestClassifier(random_state=1)
 # fit model
 training_rf_model.fit(X_train, y_train)
 
-# --- MODEL EVALUATION ---
+# ---- MODEL EVALUATION ----
 
 # make Default predictions with model
 y_pred = training_rf_model.predict(X_test)
@@ -85,7 +85,29 @@ plt.gcf().text(0.73, 0.5, evaluation_metrics_text, fontsize=12, va='center',
 plt.savefig(VISUALS_FILE_PATH/'random_forest_confusion_matrix.png')
 plt.close()
 
-# --- SAVE MODEL AS JOBLIB FILE ---
+# get feature importance from the model
+importance_list = training_rf_model.feature_importances_
+
+# store feature names and importance list in a dataframe
+feature_df = pd.DataFrame({
+    'Feature': X.columns,
+    'Importance': importance_list
+})
+
+# sort the dataframe by order of importance
+feature_df = feature_df.sort_values(by='Importance', ascending=False)
+
+# plot the feature importance bar chart
+plt.figure(figsize=(12, 8))
+plt.barh(feature_df['Feature'], feature_df['Importance'])
+plt.xlabel('Feature Importance Score')
+plt.title('Feature Importance in Loan Default Prediction')
+plt.gca().invert_yaxis()
+plt.tight_layout()
+plt.savefig(VISUALS_FILE_PATH/'feature_importance_bar_chart.png')
+plt.close()
+
+# ---- SAVE MODEL AS JOBLIB FILE ----
 
 # create new model to train with 100 percent of data
 final_rf_model = RandomForestClassifier(random_state=1)
