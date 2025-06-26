@@ -20,3 +20,10 @@ decode_loan_purpose = {
     3:'Home',
     4:'Other'
 }
+
+decode_education = {
+    0:'Bachelor\'s',
+    1:'High School',
+    2:'Master\'s',
+    3:'PhD'
+}
