@@ -3,7 +3,7 @@ from config import MODEL_FILE_PATH
 from joblib import load
 
 # feeds information from LoanApplicant object into the model to make a prediction
-def predict_default(loan_applicant):
+def model_predict(loan_applicant):
     # load Random Forest model
     rf_model = load(MODEL_FILE_PATH/"rf_model.joblib")
 
