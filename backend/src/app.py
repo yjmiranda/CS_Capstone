@@ -1,6 +1,6 @@
-from entities.LoanApplicant import LoanApplicant
-from src.predict import predict_default
-from src.config import VISUALS_FILE_PATH
+from backend.entities.LoanApplicant import LoanApplicant
+from backend.src.predict import predict_default
+from backend.src.config import VISUALS_FILE_PATH
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 

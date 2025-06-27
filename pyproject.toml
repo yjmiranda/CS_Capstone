@@ -1,7 +1,7 @@
 [project]
-name = "backend"
+name = "CS_Capstone"
 version = "0.1.0"
-description = "Backend server for Computer Science Capstone for WGU. A machine learning app that determines whether a bank loan applicant is likely to default."
+description = "Computer Science Capstone for WGU. A machine learning app that determines whether a bank loan applicant is likely to default."
 authors = [
     {name = "Yali Miranda",email = "ymiran7@wgu.edu"}
 ]

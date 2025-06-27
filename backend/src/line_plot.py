@@ -1,6 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from src.config import *
+from backend.src.config import *
 
 # define data frame
 loan_df = pd.read_csv(CSV_FILE_PATH)
