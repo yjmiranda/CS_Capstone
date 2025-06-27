@@ -1,19 +1,20 @@
-class LoanApplicant:
-    def __init__(self):
+from pydantic import BaseModel, conint
 
-        self.age = None
-        self.income = None
-        self.loan_amount = None
-        self.credit_score = None
-        self.months_employed = None
-        self.num_credit_lines = None
-        self.interest_rate = None
-        self.loan_term = None
-        self.dti_ratio = None
-        self.education = None
-        self.employment_type = None
-        self.marital_status = None
-        self.has_mortgage = None
-        self.has_dependents = None
-        self.loan_purpose = None
-        self.has_co_signer = None
+class LoanApplicant(BaseModel):
+
+    age: int
+    income: int
+    loan_amount: int
+    credit_score: conint(ge=300, le=850)
+    months_employed: int
+    num_credit_lines: int
+    interest_rate: float
+    loan_term: int
+    dti_ratio: float
+    education: conint(ge=0, le=3)
+    employment_type: conint(ge=0, le=3)
+    marital_status: conint(ge=0, le=2)
+    has_mortgage: conint(ge=0, le=1)
+    has_dependents: conint(ge=0, le=1)
+    loan_purpose: conint(ge=0, le=4)
+    has_co_signer: conint(ge=0, le=1)
