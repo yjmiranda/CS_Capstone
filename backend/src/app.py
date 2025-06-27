@@ -1,13 +1,17 @@
 from entities.LoanApplicant import LoanApplicant
 from src.predict import predict_default
+from src.config import VISUALS_FILE_PATH
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
+# landing page
 @app.get("/")
 def read_root():
     return {"message": "Loan Default Prediction API is running."}
 
+# post method for rf model prediction
 @app.post("/api/predict")
 def model_default_predict(loan_applicant: LoanApplicant):
     la = LoanApplicant(
@@ -35,3 +39,5 @@ def model_default_predict(loan_applicant: LoanApplicant):
         "probability": float(probability)
     }
 
+# mount static files for frontend image loading
+app.mount("/visuals", StaticFiles(directory=VISUALS_FILE_PATH), name="visuals")
