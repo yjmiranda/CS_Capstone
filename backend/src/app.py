@@ -1,25 +1,37 @@
 from entities.LoanApplicant import LoanApplicant
-from predict import predict_default
+from src.predict import predict_default
+from fastapi import FastAPI
 
-la = LoanApplicant(
-    age = 62,
-    income = 58724,
-    loan_amount = 92125,
-    credit_score = 674,
-    months_employed = 77,
-    num_credit_lines = 2,
-    interest_rate = 20.87,
-    loan_term = 24,
-    dti_ratio = 0.26,
-    education =1,
-    employment_type = 3,
-    marital_status = 1,
-    has_mortgage = 1,
-    has_dependents = 0,
-    loan_purpose = 4,
-    has_co_signer = 1
-)
+app = FastAPI()
 
-prediction, default_probability = predict_default(la)
-print(prediction)
-print(default_probability)
+@app.get("/")
+def read_root():
+    return {"message": "Loan Default Prediction API is running."}
+
+@app.post("/api/predict")
+def model_default_predict(loan_applicant: LoanApplicant):
+    la = LoanApplicant(
+        age = loan_applicant.age,
+        income = loan_applicant.income,
+        loan_amount = loan_applicant.loan_amount,
+        credit_score = loan_applicant.credit_score,
+        months_employed = loan_applicant.months_employed,
+        num_credit_lines = loan_applicant.num_credit_lines,
+        interest_rate = loan_applicant.interest_rate,
+        loan_term = loan_applicant.loan_term,
+        dti_ratio = loan_applicant.dti_ratio,
+        education = loan_applicant.education,
+        employment_type = loan_applicant.employment_type,
+        marital_status = loan_applicant.marital_status,
+        has_mortgage = loan_applicant.has_mortgage,
+        has_dependents = loan_applicant.has_dependents,
+        loan_purpose = loan_applicant.loan_purpose,
+        has_co_signer = loan_applicant.has_co_signer
+    )
+    prediction, probability = predict_default(la)
+
+    return {
+        "prediction": int(prediction),
+        "probability": float(probability)
+    }
+

@@ -1,5 +1,5 @@
 import pandas as pd
-from config import MODEL_FILE_PATH
+from src.config import MODEL_FILE_PATH
 from joblib import load
 
 # feeds information from LoanApplicant object into the model to make a prediction

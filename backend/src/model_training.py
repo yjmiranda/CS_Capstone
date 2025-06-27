@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, ConfusionMatrixDisplay
 from joblib import dump
-from config import *
+from src.config import *
 
 loan_df = pd.read_csv(CSV_FILE_PATH)  # convert data into dataframe
 
