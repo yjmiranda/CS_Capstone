@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default function LearnPage() {
+function LearnPage() {
     return (
         <div>
             <h1>This is the Learn Page.</h1>
@@ -9,3 +9,5 @@ export default function LearnPage() {
         </div>
     )
 }
+
+export default LearnPage
