@@ -87,6 +87,8 @@ function FormPage() {
 
     return (
         <div className="min-h-screen bg-slate-100 flex flex-col items-center py-10 px-4">
+
+            {/*Navigation*/}
             <div className="w-full max-w-2xl mb-4 text-left">
                 <Link to="/" className="text-blue-600 hover:underline">&larr; Back to Home</Link>
             </div>
@@ -94,6 +96,7 @@ function FormPage() {
                  Loan Default Predictor
              </h1>
 
+            {/*Prediction Form*/}
             <form onSubmit={handleSubmit} className="w-full max-w-2xl bg-white p-6 rounded-xl shadow-md grid grid-cols-1 md:grid-cols-2 gap-4">
                 <label className="flex flex-col">
                     <span className="font-bold">Age</span>
@@ -230,6 +233,7 @@ function FormPage() {
                 </div>
             </form>
 
+            {/*Prediction Result div*/}
             {result && (
                 <div className="mt-8 bg-white p-6 rounded-xl shadow text-center max-w-xl">
                     <h2 className="text-xl font-semibold text-blue-700 mb-2">Prediction Result</h2>
