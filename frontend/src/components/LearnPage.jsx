@@ -53,7 +53,7 @@ function LearnPage() {
                     <img src="http://localhost:8000/api/visuals/random_forest_confusion_matrix.png" alt="Confusion Matrix" className="rounded shadow-md w-full" />
 
                     <p className="mt-4">
-                        The confusion matrix shown reflects performance on a model trained with <strong>70% of the available data</strong>:
+                        The confusion matrix shown reflects performance on a model trained with 70% of the available data:
                     </p>
                     <ul className="list-disc list-inside mt-2 space-y-1 text-gray-700">
                         <li><strong>True Negatives:</strong> 50,366</li>
@@ -75,7 +75,7 @@ function LearnPage() {
                     <p className="mt-4">
                         These results reflect a strategic balance: while the model does generate more false positives,
                         it successfully identifies over half of all potential defaults — a major improvement over earlier versions.
-                        In financial settings like ours, this tradeoff is valuable: <strong>catching high-risk borrowers is a higher priority</strong> than mistakenly flagging some low-risk applicants.
+                        In financial settings like ours, this tradeoff is valuable: catching high-risk borrowers is a higher priority than mistakenly flagging some low-risk applicants.
                     </p>
 
                     <p className="mt-4">
@@ -84,7 +84,7 @@ function LearnPage() {
                     </p>
 
                     <p className="mt-4">
-                        The version of the model actively used in this application has been retrained using <strong>100% of the available data</strong> to maximize learning for live predictions.
+                        The version of the model actively used in this application has been retrained using 100% of the available data to maximize learning for live predictions.
                         However, the performance metrics shown here (based on a held-out test set) remain the most reliable indicators of expected behavior.
                     </p>
 

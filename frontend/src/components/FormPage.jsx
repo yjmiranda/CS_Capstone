@@ -31,6 +31,9 @@ function FormPage() {
     // stores result sent back from server
     const [result, setResult] = useState(null);
 
+    // is set to true while awaiting result from server
+    const [loading, setLoading] = useState(false);
+
     // updates state object
     const handleChange = e => {
         const {name, value} = e.target;
@@ -40,6 +43,7 @@ function FormPage() {
     // handles what happens when form is submitted
     const handleSubmit = async e => {
         e.preventDefault();
+        setLoading(true);
 
         // convert values from string to numerical
         const formattedData = {
@@ -62,14 +66,21 @@ function FormPage() {
             has_co_signer: Number(formData.has_co_signer)
         }
 
-        const response = await fetch("http://localhost:8000/api/predict", {
-           method: "POST",
-           headers: { "Content-Type": "application/json" },
-           body: JSON.stringify(formattedData)
-        });
+        try {
+            const response = await fetch("http://localhost:8000/api/predict", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formattedData)
+            });
 
-        const data = await response.json();
-        setResult(data);
+            const data = await response.json();
+            setResult(data);
+        } catch (error) {
+            console.error("Prediction request failed:", error);
+            setResult(null);
+        } finally {
+            setLoading(false);
+        }
     }
 
     // renders the select component
@@ -233,8 +244,19 @@ function FormPage() {
                 </div>
             </form>
 
+            {/*Loading status div*/}
+            {loading && (
+            <div className="mt-6 flex items-center space-x-3 text-blue-700 font-semibold text-lg">
+                <svg className="animate-spin h-5 w-5 text-blue-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+                </svg>
+                <span>Predicting...</span>
+            </div>
+            )}
+            
             {/*Prediction Result div*/}
-            {result && (
+            {!loading && result && (
                 <div className="mt-8 bg-white p-6 rounded-xl shadow text-center max-w-xl">
                     <h2 className="text-xl font-semibold text-blue-700 mb-2">Prediction Result</h2>
                     <p className="text-lg">
