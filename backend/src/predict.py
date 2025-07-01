@@ -1,5 +1,4 @@
 import pandas as pd
-import os
 import requests
 from src.config import MODEL_FILE_PATH
 from joblib import load

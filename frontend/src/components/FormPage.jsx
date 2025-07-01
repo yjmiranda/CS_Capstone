@@ -254,7 +254,7 @@ function FormPage() {
                 <span>Predicting...</span>
             </div>
             )}
-            
+
             {/*Prediction Result div*/}
             {!loading && result && (
                 <div className="mt-8 bg-white p-6 rounded-xl shadow text-center max-w-xl">
