@@ -1,4 +1,4 @@
-from src.entities import LoanApplicant
+from src.entities.LoanApplicant import LoanApplicant
 from src.predict import predict_default, ensure_model_exists
 from  src.config import VISUALS_FILE_PATH
 from fastapi import FastAPI

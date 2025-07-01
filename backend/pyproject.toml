@@ -1,22 +1,24 @@
-[project]
-name = "CS_Capstone"
+[tool.poetry]
+name = "backend"
 version = "0.1.0"
 description = "Computer Science Capstone for WGU. A machine learning app that determines whether a bank loan applicant is likely to default."
-authors = [
-    {name = "Yali Miranda",email = "ymiran7@wgu.edu"}
+authors = ["Yali Miranda <ymiran7@wgu.edu>"]
+packages = [
+    { include = "src" }
 ]
-requires-python = ">=3.13"
-dependencies = [
-    "pandas (>=2.3.0,<3.0.0)",
-    "numpy (>=2.3.0,<3.0.0)",
-    "matplotlib (>=3.10.3,<4.0.0)",
-    "fastapi[standard] (>=0.115.14,<0.116.0)",
-    "uvicorn (>=0.34.3,<0.35.0)",
-    "pydantic (>=2.11.7,<3.0.0)",
-    "scikit-learn (>=1.6,<2.0)",
-    "imbalanced-learn (>=0.13.0,<0.14.0)",
-    "requests (>=2.32.4,<3.0.0)"
-]
+
+[tool.poetry.dependencies]
+python = ">=3.11,<4.0"
+pandas = ">=2.3.0,<3.0.0"
+numpy = ">=2.3.0,<3.0.0"
+matplotlib = ">=3.10.3,<4.0.0"
+fastapi = {extras = ["standard"], version = ">=0.115.14,<0.116.0"}
+uvicorn = ">=0.34.3,<0.35.0"
+pydantic = ">=2.11.7,<3.0.0"
+scikit-learn = ">=1.6,<2.0"
+imbalanced-learn = ">=0.13.0,<0.14.0"
+requests = ">=2.32.4,<3.0.0"
+
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
