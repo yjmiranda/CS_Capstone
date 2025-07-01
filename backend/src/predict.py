@@ -5,7 +5,7 @@ from joblib import load
 
 MODEL_FILENAME = MODEL_FILE_PATH/"rf_model.joblib"
 # Model was uploaded to google drive as a backup. This was necessary due to file size limitations.
-MODEL_URL = "https://drive.google.com/uc?export=download&id=1yTeeTzrr2qSC_MEVOJsSDkhPE00yquXt"
+MODEL_URL = "https://www.dropbox.com/scl/fi/9bhy5lw1boj57wrr81bek/rf_model.joblib?rlkey=db01y99qvs1n5enit549s50f6&st=s94dl5aq&dl=1"
 
 # feeds information from LoanApplicant object into the model to make a prediction
 def predict_default(loan_applicant):
