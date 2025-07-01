@@ -5,6 +5,7 @@ from sklearn.preprocessing import label_binarize, LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, ConfusionMatrixDisplay
+from imblearn.over_sampling import SMOTE
 from joblib import dump
 from backend.src.config import *
 
@@ -38,8 +39,12 @@ y = loan_df['Default']
 # split into training and testing data
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1)
 
+# apply SMOTE to the training data
+smote = SMOTE(random_state=1)
+X_train, y_train = smote.fit_resample(X_train, y_train)
+
 # define Random Forest model
-training_rf_model = RandomForestClassifier(random_state=1)
+training_rf_model = RandomForestClassifier(random_state=1, class_weight="balanced")
 
 # fit model
 training_rf_model.fit(X_train, y_train)
@@ -47,10 +52,12 @@ training_rf_model.fit(X_train, y_train)
 # ---- MODEL EVALUATION ----
 
 # make Default predictions with model
-y_pred = training_rf_model.predict(X_test)
+y_pred_probs = training_rf_model.predict_proba(X_test)[:, 1]
+y_pred = (y_pred_probs > 0.3).astype(int)
 
 # generate confusion matrix
 con_matrix = confusion_matrix(y_test, y_pred)
+print(con_matrix)
 
 # evaluation metrics
 accuracy = accuracy_score(y_test, y_pred)
@@ -61,7 +68,7 @@ f1 = f1_score(y_test, y_pred)
 # generate confusion matrix plot
 fig, ax = plt.subplots(figsize=(12, 8))
 display = ConfusionMatrixDisplay(confusion_matrix=con_matrix, display_labels=training_rf_model.classes_)
-display.plot(cmap='Blues', colorbar=False)
+display.plot(cmap='Blues', colorbar=False, values_format='d')
 
 # create space to the right of the confusion matrix
 plt.subplots_adjust(left=0.1, right=0.65)
@@ -109,8 +116,12 @@ plt.close()
 
 # ---- SAVE MODEL AS JOBLIB FILE ----
 
+# apply SMOTE to the entire dataset
+smote_final = SMOTE(random_state=1)
+X, y = smote_final.fit_resample(X, y)
+
 # create new model to train with 100 percent of data
-final_rf_model = RandomForestClassifier(random_state=1)
+final_rf_model = RandomForestClassifier(random_state=1, class_weight="balanced")
 final_rf_model.fit(X, y)
 
 # save final model as a joblib file

@@ -27,10 +27,11 @@ def predict_default(loan_applicant):
         'HasCoSigner': [loan_applicant.has_co_signer]
     })
 
-    # binary prediction (default or no default)
-    default_prediction = rf_model.predict(applicant_df)[0]
-
     # probability the applicant will default
-    default_probability = rf_model.predict_proba(applicant_df)[0][1]
+    default_probability = rf_model.predict_proba(applicant_df)[0][1];
+
+    # predict using probability threshold
+    threshold = 0.3
+    default_prediction = default_probability > threshold
 
     return default_prediction, default_probability

@@ -50,4 +50,4 @@ def model_default_predict(loan_applicant: LoanApplicant):
     }
 
 # mount static files for frontend image loading
-app.mount("/visuals", StaticFiles(directory=VISUALS_FILE_PATH), name="visuals")
+app.mount("/api/visuals", StaticFiles(directory=VISUALS_FILE_PATH), name="visuals")
