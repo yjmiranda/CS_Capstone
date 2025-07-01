@@ -1,10 +1,11 @@
-from backend.entities.LoanApplicant import LoanApplicant
-from backend.src.predict import predict_default
-from backend.src.config import VISUALS_FILE_PATH
+from entities.LoanApplicant import LoanApplicant
+from src.predict import predict_default, ensure_model_exists
+from  src.config import VISUALS_FILE_PATH
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
+ensure_model_exists() # Check for model and download if necessary
 app = FastAPI()
 
 # grants frontend access to backend API

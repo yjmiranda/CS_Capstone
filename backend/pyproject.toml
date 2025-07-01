@@ -14,7 +14,8 @@ dependencies = [
     "uvicorn (>=0.34.3,<0.35.0)",
     "pydantic (>=2.11.7,<3.0.0)",
     "scikit-learn (>=1.6,<2.0)",
-    "imbalanced-learn (>=0.13.0,<0.14.0)"
+    "imbalanced-learn (>=0.13.0,<0.14.0)",
+    "requests (>=2.32.4,<3.0.0)"
 ]
 
 

@@ -1,11 +1,17 @@
 import pandas as pd
-from backend.src.config import MODEL_FILE_PATH
+import os
+import requests
+from src.config import MODEL_FILE_PATH
 from joblib import load
+
+MODEL_FILENAME = MODEL_FILE_PATH/"rf_model.joblib"
+# Model was uploaded to google drive as a backup. This was necessary due to file size limitations.
+MODEL_URL = "https://drive.google.com/uc?export=download&id=1yTeeTzrr2qSC_MEVOJsSDkhPE00yquXt"
 
 # feeds information from LoanApplicant object into the model to make a prediction
 def predict_default(loan_applicant):
     # load Random Forest model
-    rf_model = load(MODEL_FILE_PATH/"rf_model.joblib")
+    rf_model = load(MODEL_FILENAME)
 
     # generate a dataframe using the object data
     applicant_df = pd.DataFrame({
@@ -35,3 +41,13 @@ def predict_default(loan_applicant):
     default_prediction = default_probability > threshold
 
     return default_prediction, default_probability
+
+# Checks for the existence of the model file and creates one if not found.
+def ensure_model_exists():
+    if not MODEL_FILENAME.exists():
+        print("Model file not found. Downloading...")
+        response = requests.get(MODEL_URL)
+        response.raise_for_status()
+        with open(MODEL_FILENAME, "wb") as f:
+            f.write(response.content)
+        print("Model downloaded successfully.")
