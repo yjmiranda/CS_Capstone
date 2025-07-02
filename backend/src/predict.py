@@ -1,11 +1,11 @@
 import pandas as pd
+import os
+import zipfile
 import requests
 from src.config import MODEL_FILE_PATH
 from joblib import load
 
 MODEL_FILENAME = MODEL_FILE_PATH/"rf_model.joblib"
-# Model was uploaded to google drive as a backup. This was necessary due to file size limitations.
-MODEL_URL = "https://www.dropbox.com/scl/fi/9bhy5lw1boj57wrr81bek/rf_model.joblib?rlkey=db01y99qvs1n5enit549s50f6&st=s94dl5aq&dl=1"
 
 # feeds information from LoanApplicant object into the model to make a prediction
 def predict_default(loan_applicant):
@@ -33,7 +33,7 @@ def predict_default(loan_applicant):
     })
 
     # probability the applicant will default
-    default_probability = rf_model.predict_proba(applicant_df)[0][1];
+    default_probability = rf_model.predict_proba(applicant_df)[0][1]
 
     # predict using probability threshold
     threshold = 0.3
@@ -41,12 +41,39 @@ def predict_default(loan_applicant):
 
     return default_prediction, default_probability
 
-# Checks for the existence of the model file and creates one if not found.
+# Checks for the existence of the model file and downloads it if not found.
 def ensure_model_exists():
-    if not MODEL_FILENAME.exists():
-        print("Model file not found. Downloading...")
-        response = requests.get(MODEL_URL)
+    if MODEL_FILENAME.exists():
+        print("Model already exists.")
+        return
+    print("Model not found. Downloading...")
+
+    # Model was uploaded to google drive as a backup. This was necessary due to file size limitations.
+    MODEL_URL = "https://www.dropbox.com/scl/fi/i273hppwgz6n0ufflvt7c/rf_model.zip?rlkey=feregxrcekj53u1yxqv0u5o67&st=qrsn8myi&dl=1"
+    ZIP_PATH = MODEL_FILE_PATH/"rf_model.zip"
+
+    try:
+        # Download zip file
+        response = requests.get(MODEL_URL, stream=True)
         response.raise_for_status()
-        with open(MODEL_FILENAME, "wb") as f:
-            f.write(response.content)
-        print("Model downloaded successfully.")
+
+        with open(ZIP_PATH, "wb") as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                f.write(chunk)
+
+        print("Download complete. Extracting...")
+
+        # Extract joblib file
+        with zipfile.ZipFile(ZIP_PATH, "r") as zip_ref:
+            zip_ref.extractall(MODEL_FILE_PATH)
+
+        # Clean up zip file after extraction
+        os.remove(ZIP_PATH)
+
+        if MODEL_FILENAME.exists():
+            print("Model extracted successfully.")
+        else:
+            print("Model extraction failed.")
+
+    except Exception as e:
+        print("Failed to download or extract model.", e)
