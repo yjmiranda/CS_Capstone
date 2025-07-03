@@ -5,7 +5,7 @@
 
 ---
 
-## 🔍 Project Overview
+## Project Overview
 
 The app is designed to help financial institutions assess the risk of loan applicants by leveraging a predictive model trained on a labeled dataset. The workflow includes:
 
