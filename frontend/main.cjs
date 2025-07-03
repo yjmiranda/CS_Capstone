@@ -24,15 +24,15 @@ function createWindow() {
 
 // runs the backend server
 function startBackend() {
-    const backendPath = path.join(__dirname, '..', 'backend');
-
-    // Start backend server using Poetry
+    const pythonPath = path.join(__dirname, 'backend', '.venv', 'Scripts', 'python.exe');
+    const appScript = path.join(__dirname, 'backend', 'src', 'app.py')
+    
     backendProcess = spawn(
-        'poetry', 
-        ['run', 'uvicorn', 'src.app:app', '--host', '127.0.0.1', '--port', '8000'],
+        pythonPath,
+        ['-m', 'uvicorn', 'src.app:app', '--host', '127.0.0.1', '--port', '8000'],
         {
-            cwd: backendPath,
-            shell: true
+            cwd: path.join(__dirname, 'backend'),
+            shell: false
         }
     );
 

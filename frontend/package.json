@@ -9,7 +9,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "electron": "electron ."
+    "electron": "electron .",
+    "package": "electron-packager . LoanDefaultPredictor --platform=win32 --arch=x64 --overwrite"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.11",
@@ -25,6 +26,7 @@
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.5.2",
     "electron": "^37.2.0",
+    "electron-packager": "^17.1.2",
     "eslint": "^9.29.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
