@@ -6,6 +6,7 @@ import logo from '../assets/western-governors-financial-high-resolution-logo-gra
 function LandingPage() {
     const [serverReady, setServerReady] = useState(false);
 
+    // pings the fasAPI server every second until it is ready
     useEffect(() => {
         const checkServerStatus = async () => {
             try {
@@ -22,6 +23,7 @@ function LandingPage() {
         checkServerStatus();
     }, []);
 
+    // displays a loading status until the server is ready
     if (!serverReady) {
         return (
             <div className="min-h-screen flex flex-col justify-center items-center bg-slate-900 text-white text-center px-4">
