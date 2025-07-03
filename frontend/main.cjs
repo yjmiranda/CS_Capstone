@@ -13,6 +13,7 @@ function createWindow() {
         }
     });
 
+    console.log('Loading file from:', path.join(__dirname, 'dist', 'index.html'));
     win.loadFile(path.join(__dirname, 'dist', 'index.html'));
 }
 
