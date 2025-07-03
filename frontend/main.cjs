@@ -1,20 +1,25 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const { spawn } = require('child_process');
+const kill = require('tree-kill');
 
 let backendProcess;
 
 function createWindow() {
-    const win = new BrowserWindow({
+    win = new BrowserWindow({
         width: 1200,
         height: 800,
         webPreferences:{
-            nodeIntegration: false
+            nodeIntegration: false,
+            contextIsolation: true
         }
     });
 
-    console.log('Loading file from:', path.join(__dirname, 'dist', 'index.html'));
     win.loadFile(path.join(__dirname, 'dist', 'index.html'));
+
+    win.on('closed', () => {
+        win = null;
+    });
 }
 
 // runs the backend server
@@ -27,7 +32,7 @@ function startBackend() {
         ['run', 'uvicorn', 'src.app:app', '--host', '127.0.0.1', '--port', '8000'],
         {
             cwd: backendPath,
-            shell: true,
+            shell: true
         }
     );
 
@@ -45,6 +50,22 @@ function startBackend() {
 
 }
 
+
+// kills the backend server
+function stopBackend() {
+    if (backendProcess) {
+        kill(backendProcess.pid, 'SIGTERM', (err) => {
+            if (err) {
+                console.error('Failed to kill backend process:', err);
+            } else {
+                console.log('Backend process terminated');
+            }
+        });
+        backendProcess = null;
+    }
+}
+
+// starts the backend and opens the app window
 app.whenReady().then(() => {
     startBackend();
     createWindow();
@@ -56,17 +77,15 @@ app.whenReady().then(() => {
     });
 });
 
-app.on('before-quit', () => {
-    if (backendProcess){
-        backendProcess.kill('SIGTERM');
-    }
-});
+
+// these will ensure the server is killed when the window is closed
+app.on('before-quit', stopBackend);
 
 app.on('window-all-closed', () => {
+    stopBackend();
     if (process.platform !== 'darwin') {
-        if(backendProcess) {
-            backendProcess.kill('SIGTERM');
-        }
         app.quit();
     }
 });
+
+app.on('quit', stopBackend);
