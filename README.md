@@ -104,7 +104,7 @@ const handleSubmit = async (e) => {
 
 ---
 
-## 💻 Technologies Used
+## Technologies Used
 
 ### Backend (Python)
 
